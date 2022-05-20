@@ -1,7 +1,7 @@
 <template>
   <div>
     <HeaderComp :titlesSearched="titlesSearched" />
-    <MainComp @titles="titles" />
+    <MainComp @titlesToSearch="titles" />
   </div>
 </template>
 
@@ -18,12 +18,12 @@ export default {
   },
   data() {
     return {
-      titles: [],
+      titles: '',
     }
   },
   methods: {
-    titlesSearched(datas) {
-      this.titles = datas;
+    titlesSearched(data) {
+      this.titles = data;
     }
   }
 }

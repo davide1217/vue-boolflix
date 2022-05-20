@@ -1,44 +1,24 @@
 <template>
   <div class="m-3" action="">
   
-    <input v-model.trim="apiParams.query" type="text" placeholder="cerca un titolo">
-    <div id="btn" @click="getApi()">Cerca</div>
+    <input v-model.trim="query" type="text" placeholder="cerca un titolo">
+    <div id="btn" @click="$emit('titlesSearched', query)">Cerca</div>
   
   </div>
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
   name: 'HeaderComp',
 
   data() {
     return {
-      titles: [],
-      apiUrl: 'https://api.themoviedb.org/3',
-      apiMovies: '/search/movie',
-      apiParams: {
-        api_key: '5f4fd7f5dc5c754c3c85c2ce597184b1',
-        language: 'it-IT',
-        query: '',
-      }
+      
+      query: '',
+      
     }
   },
-  methods:{
-
-    getApi() {
-      if(this.titleToSearch != '') {
-
-        this.titles = [];
-        axios.get(this.apiUrl+this.apiMovies, {
-        params: this.apiParams
-        }).then( res => {
-        this.titles = res.data.results
-        })
-      }
-    }
-  }
 }
 </script>
 
