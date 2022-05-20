@@ -2,7 +2,7 @@
   <div class="m-3" action="">
   
     <input v-model.trim="apiParams.query" type="text" placeholder="cerca un titolo">
-    <div id="btn" @click="getApi(), (titles.length != 0) ? $emit('titlesSearched', titles) : '' ">Cerca</div>
+    <div id="btn" @click="getApi()">Cerca</div>
   
   </div>
 </template>
