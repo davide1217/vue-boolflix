@@ -2,7 +2,7 @@
   <div class="m-3" action="">
   
     <input v-model.trim="query" type="text" placeholder="cerca un titolo">
-    <div id="btn" @click="$emit('titlesSearched', query)">Cerca</div>
+    <div id="btn" @click="doEmit()">Cerca</div>
   
   </div>
 </template>
@@ -19,6 +19,15 @@ export default {
       
     }
   },
+
+  methods: {
+    doEmit() {
+      const input = this.query
+      this.$emit('titlesSearched', input);
+      this.query = '';
+
+    }
+  }
 }
 </script>
 
