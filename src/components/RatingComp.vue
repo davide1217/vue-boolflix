@@ -25,7 +25,7 @@ export default {
     voteInStars() {
 
       const starsNotApproximated = this.rating / 2;
-      console.log(starsNotApproximated);
+
       if(starsNotApproximated % 1 > 0.5) {
         this.stars = Math.ceil(starsNotApproximated)
       } else {
