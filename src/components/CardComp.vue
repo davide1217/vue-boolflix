@@ -1,71 +1,109 @@
 <template>
-  <div v-if="item.title" class="item d-flex align-items-center m-3">
-    <div class="me-5">
+  <div v-if="item.title" class="col-6 col-lg-4 _col">
+    <div class="h-100 position-relative">
+
       <img v-if="item.poster_path == null" src="https://blog.rahulbhutani.com/wp-content/uploads/2020/05/Screenshot-2018-12-16-at-21.06.29.png" alt="">
-      <img v-else :src="`https://image.tmdb.org/t/p/original/${item.poster_path}`" alt="">
-    </div>
-    <div class="text-center">
-      <h2>Titolo: {{item.title}}</h2>
-      <h4>Titolo originale: {{item.original_title}}</h4>
-      <span>Lingua originale: <img :src="`https://flagcdn.com/16x12/${(item.original_language == 'en') ? 'gb' : item.original_language}.png`" alt=""> </span><br>
-      <span>Voto medio: {{voteInStars()}}
-        <span v-for="index in 5" :key="`starN-${index}}`">
-          <span v-if="index <= stars"><i class="fa-solid fa-star"></i></span>
-          <span v-else><i class="fa-regular fa-star"></i></span>
-        </span>
-      </span>
+      <img v-else :src="`https://image.tmdb.org/t/p/w342/${item.poster_path}`" alt="">
+
+      <div>
+        <div class="mb-3"><strong class="text-uppercase">Titolo:</strong> {{item.title}}</div>
+        <div v-show="item.title != item.original_title" class="mb-3"><strong class="text-uppercase">Titolo originale:</strong> {{item.original_title}}</div>
+        <p v-show="item.overview != '' ">Descrizione: {{item.overview}}</p>
+        <span>Lingua originale: <img :src="`https://flagcdn.com/16x12/${(item.original_language == 'en') ? 'gb' : item.original_language}.png`" alt=""> </span><br>
+        <RatingComp :rating="item.vote_average" />
+      </div>
     </div>
   </div>
 
-  <div v-else class="item d-flex align-items-center m-3">
-    <div class="me-5">
+  <div v-else class="col-6 col-lg-4 _col">
+    <div class="h-100 position-relative">
+
       <img v-if="item.poster_path == null" src="https://blog.rahulbhutani.com/wp-content/uploads/2020/05/Screenshot-2018-12-16-at-21.06.29.png" alt="">
-      <img v-else :src="`https://image.tmdb.org/t/p/original/${item.poster_path}`" alt="">
-    </div>
-    <div class="text-center">
-      <h2>Titolo: {{item.name}}</h2>
-      <h4>Titolo originale: {{item.original_name}}</h4>
-      <span>Lingua originale: <img :src="`https://flagcdn.com/16x12/${(item.original_language == 'en') ? 'gb' : item.original_language}.png`" alt=""> </span><br>
-      <span>Voto medio: {{voteInStars()}}
-        <span v-for="index in 5" :key="`starN-${index}}`">
-          <span v-if="index <= stars"><i class="fa-solid fa-star"></i></span>
-          <span v-else><i class="fa-regular fa-star"></i></span>
-        </span>
-      </span>
+      <img v-else :src="`https://image.tmdb.org/t/p/w342/${item.poster_path}`" alt="">
+      
+      <div>
+        <div class="mb-3"><strong class="text-uppercase">Titolo:</strong> {{item.name}}</div>
+        <div v-show="item.name != item.original_name" class="mb-3"><strong class="text-uppercase">Titolo originale:</strong> {{item.original_name}}</div>
+        <p v-show="item.overview != '' ">Descrizione: {{item.overview}}</p>
+        <span>Lingua originale: <img :src="`https://flagcdn.com/16x12/${(item.original_language == 'en') ? 'gb' : item.original_language}.png`" alt=""> </span><br>
+        <RatingComp :rating="item.vote_average" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import RatingComp from './RatingComp';
+
 export default {
+  components: { RatingComp },
   name: 'CardComp',
   data() {
     return {
-      stars: '',
+
     }
   },
   props: {
     item : Object,
   },
   methods: {
-    voteInStars() {
-
-      const starsNotApproximated = this.item.vote_average / 2;
-      console.log(starsNotApproximated);
-      if(starsNotApproximated % 1 > 0.5) {
-        this.stars = Math.ceil(starsNotApproximated)
-      } else {
-        this.stars = parseInt(starsNotApproximated)
-      }
-
-    }
+    
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  img {
-    width: 300px;
+
+  ._col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    height: 516px;
+
+    & > div {
+      width: 346px;
+      border: 2px solid white;
+      overflow: hidden;
+      
+      & > img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        transition: .5s all;
+      }
+
+      & > div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        transition: .5s all;
+        opacity: 0;
+
+        & p {
+          max-height: 150px;
+          overflow-y: auto;
+        } 
+      }
+
+      &:hover > img {
+        opacity: 0;
+      }
+
+      &:hover > div {
+        opacity: 1;
+        background-color: rgb(14, 14, 14);
+        color: #727272;
+      }
+    }
+
   }
 
   span {
