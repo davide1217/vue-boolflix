@@ -22,10 +22,8 @@ export default {
 
   methods: {
     doEmit() {
-      const input = this.query
-      this.$emit('titlesSearched', input);
+      this.$emit('titlesSearched', this.query);
       this.query = '';
-
     }
   }
 }

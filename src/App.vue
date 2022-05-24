@@ -1,7 +1,7 @@
 <template>
     <div>
-      <HeaderComp @titlesSearched="titlesSearched" />
-      <MainComp :titlesToSearch="titles" />
+      <HeaderComp @titlesSearched="titlesSearched"/>
+      <MainComp :movies="movies" :series="series" />
     </div>
 </template>
 
@@ -9,6 +9,7 @@
 import HeaderComp from './components/HeaderComp.vue';
 import MainComp from './components/MainComp.vue';
 import axios from "axios";
+
 
 
 export default {
@@ -19,9 +20,9 @@ export default {
   },
   data() {
     return {
-      titles: [],
-      apiUrl: 'https://api.themoviedb.org/3',
-      apiMovies: '/search/movie',
+      movies: [],
+      series: [],
+      apiUrl: 'https://api.themoviedb.org/3/search/',
       apiParams: {
         api_key: '5f4fd7f5dc5c754c3c85c2ce597184b1',
         language: 'it-IT',
@@ -31,17 +32,41 @@ export default {
   },
 
   methods: {
+
     titlesSearched(data) {
-      this.titles = [];
       this.apiParams.query = data;
-      
-      axios.get(this.apiUrl+this.apiMovies, {
-      params: this.apiParams
-      }).then( res => {
-      this.titles = res.data.results;
-      })
+      this.movies= [],
+      this.series= [],
+      this.getApi('movie', this.moviesTitles);
+      this.getApi('tv', this.seriesTitles);
+    },
+
+    getApi(type) {
+
+      if(type == 'movie') {
+        axios.get(this.apiUrl + type, {
+        params: this.apiParams})
+        .then(res => {
+          res.data.results.forEach(element => {
+          this.movies.push(element)
+          });
+        });
+      } 
+      else {
+        axios.get(this.apiUrl + type, {
+        params: this.apiParams})
+        .then(res => {
+          res.data.results.forEach(element => {
+          this.series.push(element)
+          });
+        });
+      }
+
     }
-  }
+      
+    
+  },
+
 }
 </script>
 
