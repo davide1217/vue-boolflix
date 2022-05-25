@@ -41,7 +41,7 @@ export default {
 
   header {
     height: 100px;
-    background-color: black;
+    background-image: linear-gradient(black, #434343);
     display: flex;
     justify-content: space-between;
     align-items: center;

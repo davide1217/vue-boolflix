@@ -1,6 +1,7 @@
 <template>
     <div>
       <HeaderComp @titlesSearched="titlesSearched" @changedSelect="changedSelect"/>
+      <JumboComp :movies="jumboMovies"/>
       <MainComp :movies="movies" :series="series" :newSelect="selectValue" />
     </div>
 </template>
@@ -9,6 +10,7 @@
 import HeaderComp from './components/HeaderComp.vue';
 import MainComp from './components/MainComp.vue';
 import axios from "axios";
+import JumboComp from './components/JumboComp.vue';
 
 
 
@@ -16,11 +18,14 @@ export default {
   name: 'App',
   components: {
     HeaderComp,
+    JumboComp,
     MainComp
+    
   },
   data() {
     return {
       selectValue: '',
+      jumboMovies: [],
       movies: [],
       series: [],
       apiUrl: 'https://api.themoviedb.org/3/search/',
@@ -95,6 +100,7 @@ export default {
       .then(res => {
         res.data.results.forEach(element => {
         if (type == 'movie/day') {
+          this.jumboMovies.push(element);
           this.movies.push(element)
         } else {
           this.series.push(element)
