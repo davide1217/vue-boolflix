@@ -31,7 +31,7 @@ export default {
   },
   computed: {
     background() {
-      return {"--backgroundImage": `url(https://image.tmdb.org/t/p/w342/${this.movies[this.counter].backdrop_path})`}
+      return {"--backgroundImage": `url(https://image.tmdb.org/t/p/w342${this.movies[this.counter].backdrop_path})`}
     }
   }
 }

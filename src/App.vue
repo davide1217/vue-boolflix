@@ -98,14 +98,24 @@ export default {
       axios.get(this.apiUrlTrending + type, {
       params: this.apiParamsTrending})
       .then(res => {
-        res.data.results.forEach(element => {
-        if (type == 'movie/day') {
-          this.jumboMovies.push(element);
-          this.movies.push(element)
+        if(this.jumboMovies.length == 0) {
+          res.data.results.forEach(element => {
+            if (type == 'movie/day') {
+              this.jumboMovies.push(element);
+              this.movies.push(element)
+            } else {
+              this.series.push(element)
+            }
+          })
         } else {
-          this.series.push(element)
+          res.data.results.forEach(element => {
+            if (type == 'movie/day') {
+              this.movies.push(element)
+            } else {
+              this.series.push(element)
+            }
+          })
         }
-        });
       });
     }
   },
